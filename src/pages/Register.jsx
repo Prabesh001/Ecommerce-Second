@@ -1,17 +1,35 @@
 import { useState } from "react";
 import TextField from "../components/TextField";
+import { handlePostOperation } from "../functions/handlePostOperation";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password, username, phone, confirmPassword);
+    const result = await handlePostOperation(
+      "http://localhost:4000/api/auth/register",
+      {
+        email,
+        userName,
+        password,
+        confirmPassword,
+        phone,
+      }
+    );
+
+    console.log(result);
+
+    if (result.status === 200) {
+      alert(result.data.message || "User registered successfully!");
+    } else {
+      alert(result.response.data || "User registration failed!");
+    }
   };
   return (
     <div className="min-h-screen flex flex-col gap-3 justify-center items-center">
@@ -26,10 +44,10 @@ const Register = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
-          id={"username"}
-          label={"Username"}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          id={"userName"}
+          label={"userName"}
+          value={userName}
+          onChange={(e) => setuserName(e.target.value)}
         />
         <TextField
           id={"phone"}

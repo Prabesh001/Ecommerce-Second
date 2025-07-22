@@ -1,14 +1,30 @@
 import { useState } from "react";
 import TextField from "../components/TextField";
+import { handlePostOperation } from "../functions/handlePostOperation";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("email", email);
-    console.log("password", password);
+
+    const result = await handlePostOperation(
+      "http://localhost:4000/api/auth/login",
+      {
+        email,
+        password,
+      }
+    );
+    console.log(result);
+    if (result.status === 200) {
+      alert("User logged in successfully!");
+      navigate("/");
+    } else {
+      alert(result.response.data || "Login error!");
+    }
   };
 
   return (
