@@ -11,15 +11,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await handlePostOperation(
-      "http://localhost:4000/api/auth/login",
-      {
-        email,
-        password,
-      }
-    );
+    const result = await handlePostOperation("/auth/login", {
+      email,
+      password,
+    });
     console.log(result);
     if (result.status === 200) {
+      localStorage.setItem("token", result.data.token);
       alert("User logged in successfully!");
       navigate("/");
     } else {
@@ -31,21 +29,20 @@ const Login = () => {
     <>
       <div className="h-screen flex flex-col gap-3 justify-center items-center">
         <p>Login</p>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col p-4 gap-2 border border-gray-700"
-        >
+        <form onSubmit={handleSubmit} className="form-section">
           <TextField
             id={"email"}
             label={"Email"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Eg. example@gmail.com"
           />
           <TextField
             id={"password"}
             label={"Password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Eg. ********"
           />
           <button type="submit">Submit</button>
         </form>

@@ -13,7 +13,7 @@ const Register = () => {
     e.preventDefault();
 
     const result = await handlePostOperation(
-      "http://localhost:4000/api/auth/register",
+      "/auth/register",
       {
         email,
         userName,
@@ -22,8 +22,6 @@ const Register = () => {
         phone,
       }
     );
-
-    console.log(result);
 
     if (result.status === 200) {
       alert(result.data.message || "User registered successfully!");
@@ -35,7 +33,7 @@ const Register = () => {
     <div className="min-h-screen flex flex-col gap-3 justify-center items-center">
       <p>Register</p>
 
-      <form onSubmit={handleSubmit} className="border p-2">
+      <form onSubmit={handleSubmit} className="form-section">
         <TextField
           id={"email"}
           label={"Email"}

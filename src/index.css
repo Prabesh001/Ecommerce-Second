@@ -2,5 +2,13 @@
 
 input {
   border: 1px solid black;
-  padding: 2px;
+  padding: 4px;
+}
+
+button {
+  @apply bg-blue-500 text-white p-2 rounded;
+}
+
+.form-section {
+  @apply border p-4 rounded flex flex-col gap-2;
 }
