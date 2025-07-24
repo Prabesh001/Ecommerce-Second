@@ -16,6 +16,8 @@ const ForgotPassword = () => {
       email,
     });
 
+    console.log(response)
+
     if (response.status === 200) {
       toast.success("OTP send to your email!");
 

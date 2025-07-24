@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TextField from "../components/TextField";
 import { handlePostOperation } from "../functions/handlePostOperation";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -44,6 +44,13 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Eg. ********"
           />
+
+          <Link
+            className="text-xs text-blue-700 font-bold"
+            to="/forgot-password"
+          >
+            Forgot Password?
+          </Link>
           <button type="submit">Submit</button>
         </form>
       </div>
