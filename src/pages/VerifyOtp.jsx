@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "../components/TextField";
 import { handlePostOperation } from "../functions/handlePostOperation";
 import { toast } from "react-toastify";
+import { handleGetOperation } from "../functions/handleGetOperation";
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
@@ -14,6 +15,18 @@ const VerifyOtp = () => {
     if (!email) {
       navigate("/login");
     }
+
+    const handleAuth = async () => {
+      const result = await handleGetOperation("/auth/verify/otp");
+
+      if (result.status === 200) {
+        return;
+      } else {
+        toast.error("Please follow proper step!");
+        navigate("/forgot-password");
+      }
+    };
+    handleAuth();
   }, []);
 
   const handleSubmit = async (e) => {

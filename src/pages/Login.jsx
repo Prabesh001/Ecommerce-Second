@@ -40,6 +40,7 @@ const Login = () => {
           <TextField
             id={"password"}
             label={"Password"}
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Eg. ********"

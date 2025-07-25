@@ -3,6 +3,7 @@ import TextField from "../components/TextField";
 import { useNavigate } from "react-router-dom";
 import { handlePostOperation } from "../functions/handlePostOperation";
 import { toast } from "react-toastify";
+import { handleGetOperation } from "../functions/handleGetOperation";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -14,6 +15,18 @@ const ResetPassword = () => {
     if (!email || !isOtpVerified) {
       navigate("/verify-otp");
     }
+
+    const handleAuth = async () => {
+      const result = await handleGetOperation("/auth/verify/reset");
+
+      if (result.status === 200) {
+        return;
+      } else {
+        toast.error("Verify otp first!");
+        navigate("/verify-otp");
+      }
+    };
+    handleAuth();
   }, []);
 
   const handleSubmit = async (e) => {

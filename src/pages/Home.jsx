@@ -1,32 +1,35 @@
-import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { handleGetOperation } from "../functions/handleGetOperation";
+import { toast } from "react-toastify";
 
 const Home = () => {
-  const handleSave = () => {
-    localStorage.setItem("name", "Prabesh");
-  };
+  const navigate = useNavigate();
 
-  const handleGet = () => {
-    const name = localStorage.getItem("name");
-    console.log(name);
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
 
-  const handleClear = () => {
-    localStorage.removeItem("name");
-  };
+    if (!token) {
+      navigate("/login");
+    }
 
-  const handleClearAll = () => {
-    localStorage.clear();
-  };
+    const handleAuth = async () => {
+      const result = await handleGetOperation("/auth/verify/home");
+
+      if (result.status === 200) {
+        toast.success("Login Successfully!");
+      } else {
+        toast.error("Login first!");
+        navigate("/login");
+      }
+    };
+
+    handleAuth();
+  }, []);
+
   return (
     <div>
       <h1>Home</h1>
-
-      <div className="flex gap-2">
-        <button onClick={handleSave}>Save Data</button>
-        <button onClick={handleGet}>Get Data</button>
-        <button onClick={handleClear}>Clear Data</button>
-        <button onClick={handleClearAll}>Clear All</button>
-      </div>
     </div>
   );
 };
